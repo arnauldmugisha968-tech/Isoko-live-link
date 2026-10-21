@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ISOKO LINK LIVE</title>
+<style>
+:root{--green:#087f5b;--dark:#12352b;--mint:#e7f6ef;--bg:#f5f7f6;--muted:#66756f}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:#17221e}
+header{background:var(--dark);color:white;padding:18px 16px;position:sticky;top:0;z-index:2}
+.brand{font-size:21px;font-weight:800;letter-spacing:.3px}.brand span{color:#79e0b5}
+header p{margin:5px 0 0;color:#d1e8dd;font-size:12px}
+nav{display:flex;gap:7px;overflow:auto;padding:10px;background:#fff;border-bottom:1px solid #e2e9e5;position:sticky;top:69px;z-index:2}
+nav button{border:0;border-radius:20px;padding:10px 13px;background:#eef3f0;color:#294238;font-weight:700;white-space:nowrap}
+nav button.active{background:var(--green);color:#fff}
+main{max-width:850px;margin:auto;padding:16px}
+h1{font-size:25px;margin:5px 0 8px}h2{font-size:18px;margin:0 0 12px}
+.sub{color:var(--muted);margin:0 0 18px;font-size:14px}
+.panel,.product,.stat{background:white;border:1px solid #e3eae6;border-radius:16px;padding:15px;margin-bottom:13px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.product{padding:0;overflow:hidden;margin:0}
+.product .emoji{font-size:48px;background:var(--mint);height:105px;display:grid;place-items:center}
+.product .info{padding:12px}.product h3{font-size:15px;margin:0 0 6px}.price{color:var(--green);font-weight:800}
+button,.action{cursor:pointer}.primary{border:0;background:var(--green);color:white;padding:11px 14px;border-radius:10px;font-weight:700}
+.secondary{border:1px solid #cbd8d1;background:white;color:var(--dark);padding:10px 12px;border-radius:10px;font-weight:700}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+input,textarea,select{width:100%;padding:12px;border:1px solid #cbd8d1;border-radius:10px;font:inherit;margin:5px 0 12px;background:white}
+label{font-size:13px;font-weight:700;color:#35483f}
+.tag{display:inline-block;background:#ffe5e5;color:#a51d1d;border-radius:7px;padding:5px 8px;font-size:11px;font-weight:800}
+.live{background:#fff2f2;border:1px solid #ffd6d6;border-radius:14px;padding:14px;margin-bottom:12px}
+.notice{font-size:12px;line-height:1.5;color:#596b62;background:#f0f5f2;padding:11px;border-radius:10px}
+.chatbox{height:190px;overflow:auto;background:#f7faf8;border:1px solid #e3eae6;border-radius:12px;padding:10px;margin-bottom:10px}
+.msg{background:#e5f5ec;border-radius:12px;padding:8px 10px;margin:7px 0;max-width:85%;font-size:14px}
+.msg.mine{margin-left:auto;background:#dce9ff}
+.hidden{display:none}.stat strong{font-size:23px;display:block;color:var(--green)}.stat span{font-size:12px;color:var(--muted)}
+footer{text-align:center;color:#7a8982;font-size:12px;padding:25px}
+@media(min-width:620px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<header><div class="brand">ISOKO <span>LINK LIVE</span></div><p>Connect producers, sellers and buyers</p></header>
+<nav id="nav">
+<button class="active" data-page="home">Marketplace</button><button data-page="live">Live selling</button><button data-page="request">Request a product</button><button data-page="orders">My orders</button><button data-page="chat">Chat demo</button><button data-page="sell">Sell a product</button>
+</nav>
+<main>
+<section id="home" class="page">
+<h1>Discover products</h1><p class="sub">Shop from local sellers and producers.</p>
+<div class="panel"><label for="search">Search products</label><input id="search" placeholder="Try tomatoes, shoes, beans..." oninput="filterProducts()"></div>
+<div id="products" class="grid">
+<article class="product" data-name="fresh tomatoes"><div class="emoji">🍅</div><div class="info"><h3>Fresh tomatoes</h3><div class="price">RWF 1,500 / basket</div><p class="sub">Local producer · Kigali</p><button class="primary" onclick="orderProduct('Fresh tomatoes')">Order</button></div></article>
+<article class="product" data-name="beans"><div class="emoji">🫘</div><div class="info"><h3>Dry beans</h3><div class="price">RWF 2,000 / kg</div><p class="sub">Farm supplier · Eastern Province</p><button class="primary" onclick="orderProduct('Dry beans')">Order</button></div></article>
+<article class="product" data-name="bananas"><div class="emoji">🍌</div><div class="info"><h3>Cooking bananas</h3><div class="price">RWF 3,000 / bunch</div><p class="sub">Producer · Western Province</p><button class="primary" onclick="orderProduct('Cooking bananas')">Order</button></div></article>
+</div>
+</section>
+<section id="live" class="page hidden"><h1>Live selling</h1><p class="sub">Find producers showcasing their products live.</p>
+<div class="live"><span class="tag">● LIVE DEMO</span><h2 style="margin-top:12px">Fresh from the farm</h2><p>Sample live-selling card. Real video streaming is not connected yet.</p><button class="primary" onclick="alert('Live streaming needs a video service integration. This is only a prototype.')">Join live demo</button></div>
+<div class="notice">To enable real livestreams, we will need to connect a video-streaming provider. Supabase alone does not provide live video streaming.</div></section>
+<section id="request" class="page hidden"><h1>Request a product</h1><p class="sub">Tell sellers what you need. This is your product request / “command” feature.</p>
+<div class="panel"><form id="requestForm"><label>Product needed</label><input id="reqProduct" required placeholder="e.g. 20 kg of rice"><label>Quantity</label><input id="reqQty" required placeholder="e.g. 20 kg"><label>Delivery area</label><input id="reqArea" placeholder="e.g. Rusizi"><label>Budget (RWF)</label><input id="reqBudget" type="number" min="0" placeholder="Optional"><button class="primary" type="submit">Post request</button></form></div><div id="requests"></div></section>
+<section id="orders" class="page hidden"><h1>My orders</h1><p class="sub">Orders you create in this demo appear here.</p><div id="orderList"><div class="panel">No orders yet. Browse the marketplace and tap Order.</div></div></section>
+<section id="chat" class="page hidden"><h1>Chat demo</h1><p class="sub">A sample buyer–seller chat interface.</p><div class="panel"><div class="chatbox" id="chatbox"><div class="msg">Seller: Hello! How can I help you?</div></div><form id="chatForm"><label>Message</label><input id="chatInput" required placeholder="Write a message..."><button class="primary" type="submit">Send</button></form><p class="notice">Important: this chat is a local demo, not encrypted end-to-end and not connected to a server. We will implement secure messaging properly during integration.</p></div></section>
+<section id="sell" class="page hidden"><h1>Sell a product</h1><p class="sub">Create a sample listing for your shop.</p><div class="panel"><form id="sellForm"><label>Product name</label><input id="sellName" required placeholder="Product name"><label>Price (RWF)</label><input id="sellPrice" type="number" min="1" required placeholder="Price"><label>Seller location</label><input id="sellLocation" placeholder="District / sector"><label>Category</label><select id="sellCategory"><option>Food & agriculture</option><option>Clothing</option><option>Electronics</option><option>Home goods</option><option>Other</option></select><button class="primary" type="submit">Add listing</button></form></div></section>
+</main>
+<footer>ISOKO LINK LIVE · Prototype only · Demo data stays in this page and is not saved to Supabase.</footer>
+<script>
+const orders=[];let reqCount=0;
+document.querySelectorAll('#nav button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('#nav button').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));document.getElementById(b.dataset.page).classList.remove('hidden');}));
+function orderProduct(name){orders.push({name,id:orders.length+1});renderOrders();alert(name+' added to your demo orders.');}
+function renderOrders(){const el=document.getElementById('orderList');if(!orders.length){el.innerHTML='<div class="panel">No orders yet.</div>';return;}el.innerHTML=orders.map(o=>`<div class="panel"><div class="row"><div><strong>Order #${o.id}</strong><p>${o.name}</p></div><span class="tag">DEMO</span></div></div>`).join('');}
+function filterProducts(){const q=document.getElementById('search').value.toLowerCase();document.querySelectorAll('#products .product').forEach(p=>p.style.display=p.dataset.name.includes(q)?'':'none');}
+document.getElementById('requestForm').addEventListener('submit',e=>{e.preventDefault();reqCount++;const p=document.getElementById('reqProduct').value;const q=document.getElementById('reqQty').value;const a=document.getElementById('reqArea').value;const b=document.getElementById('reqBudget').value;const el=document.createElement('div');el.className='panel';el.innerHTML=`<strong>Request #${reqCount}: ${escapeHtml(p)}</strong><p>Quantity: ${escapeHtml(q)}${a?' · Area: '+escapeHtml(a):''}${b?' · Budget: RWF '+escapeHtml(b):''}</p><span class="tag">LOCAL DEMO</span>`;document.getElementById('requests').prepend(el);e.target.reset();});
+document.getElementById('chatForm').addEventListener('submit',e=>{e.preventDefault();const input=document.getElementById('chatInput');const m=document.createElement('div');m.className='msg mine';m.textContent=input.value;document.getElementById('chatbox').appendChild(m);input.value='';document.getElementById('chatbox').scrollTop=99999;});
+document.getElementById('sellForm').addEventListener('submit',e=>{e.preventDefault();const name=document.getElementById('sellName').value;const price=document.getElementById('sellPrice').value;const loc=document.getElementById('sellLocation').value;const card=document.createElement('article');card.className='product';card.dataset.name=name.toLowerCase();card.innerHTML=`<div class="emoji">🛍️</div><div class="info"><h3>${escapeHtml(name)}</h3><div class="price">RWF ${escapeHtml(price)}</div><p class="sub">${escapeHtml(loc||'Local seller')}</p><button class="primary" onclick="orderProduct('${escapeJs(name)}')">Order</button></div>`;document.getElementById('products').prepend(card);e.target.reset();document.querySelector('[data-page="home"]').click();});
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function escapeJs(s){return String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'");}
+</script>
+</body>
+</html>
