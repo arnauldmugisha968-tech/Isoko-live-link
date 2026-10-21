@@ -74,5 +74,19 @@ document.getElementById('sellForm').addEventListener('submit',e=>{e.preventDefau
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function escapeJs(s){return String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'");}
 </script>
-</body>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL "https://vbsbznrlmogxrounxmcn.supabase.co";
+  const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_dX-SdwlfEjOXFk1bJPP--Q_vgDYApuq";
+
+  const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
+
+  console.log("ISOKO LINK LIVE: Supabase client initialized");
+</script>
+
+ </body>
 </html>
